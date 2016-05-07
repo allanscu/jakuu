@@ -78,13 +78,3 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  adapter: postgresql
-  encoding: unicode
-  reconnect: false
-  pool: 3
-  database: deedglhl
-  host: pellefant-02.db.elephantsql.com
-  port: 5432
-  username: deedglhl
-  password: Hn0SuRlME2LLhN2GOfnvzzDYXTXyrwyq
