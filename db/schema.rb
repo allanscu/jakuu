@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160505232825) do
     t.string   "state"
     t.string   "zip_code"
     t.string   "country"
+    t.string   "phone"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at", null: false

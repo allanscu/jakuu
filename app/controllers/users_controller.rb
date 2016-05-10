@@ -36,6 +36,20 @@ class UsersController < ApplicationController
         # Deliver the signup email
         UserNotifier.send_signup_email(@user).deliver
         
+        # Deliver Twilio SMS
+        twilio_sid = "AC7ae612ebddee8f121c9bdd3c708df464"
+        twilio_token = "74f6d4e192fb0090ad0dcf37d413b7f1"
+        
+        twilio_phone_number = "6504899933"
+        
+        @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
+
+        @twilio_client.account.sms.messages.create(
+          :from => "+1#{twilio_phone_number}",
+          :to => @user.phone,
+          :body => "This is a message. It gets sent to #{@user.phone}"
+        )
+        
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -77,6 +91,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :address_1, :address_2, :city, :state, :zip_code, :country, :email)
+      params.require(:user).permit(:first_name, :last_name, :address_1, :address_2, :city, :state, :zip_code, :country, :email, :phone)
     end
 end

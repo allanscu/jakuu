@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Ruby file
 ruby '2.3.0'
 
+# Twilio
+gem 'twilio-ruby'
+
 # Puma
 gem 'puma'
 

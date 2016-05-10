@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :state
       t.string :zip_code
       t.string :country
+      t.string :phone
       t.float :latitude
       t.float :longitude
 
