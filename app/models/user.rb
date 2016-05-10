@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
     [address_1, address_2, city, state, country].compact.join(', ')
   end
   
-  after_validation :geocode       
+  after_validation :geocode
   
 end
