@@ -51,7 +51,9 @@
 </p>
 
 <br />
-<br />
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
 
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi2m6eZeYQabAIV-5uZGlf16DbWvJCMOs&sensor=false">
@@ -59,7 +61,6 @@
 <script type="text/javascript">
   function set_map(state, city){
     var mapOptions = {
-      center: new google.maps.LatLng(25.687944,-100.309403),
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -97,8 +98,11 @@
     set_map('<%= @user.latitude %>', '<%= @user.longitude %>');
   })
 </script>
+  
+<br />
+<br />
+<br />
+<br />
+  
 
 <div id="map-canvas" style="width:300px;height:200px"/>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

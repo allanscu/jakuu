@@ -6,6 +6,10 @@ ruby '2.3.0'
 # Puma
 gem 'puma'
 
+# Twitter Bootstrap
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+
 # Maps
 gem 'geocoder'
 gem 'gmaps4rails'
