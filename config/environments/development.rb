@@ -54,8 +54,4 @@ Rails.application.configure do
   ENV['TWILIO_NUMBER'] = '6504899933'
   ENV['TWILIO_ACCOUNT_SID'] = 'AC7ae612ebddee8f121c9bdd3c708df464'
   ENV['TWILIO_AUTH_TOKEN'] = '74f6d4e192fb0090ad0dcf37d413b7f1'
-  
-  # Twilio Authy
-  #secret_key_base: 2995cd200a475082070d5ad7b11c69407a6219b0b9bf1f747f62234709506c097da19f731ecf125a3fb53694ee103798d6962c199603b92be8f08b00bf6dbb18
-  ENV['AUTHY_API_KEY'] = '7ea6e01f516b0a3ba8e9df75d1f9a6f6'
 end

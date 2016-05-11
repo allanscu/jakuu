@@ -1,8 +1,4 @@
-Rails.application.routes.draw do
-  get "users/verify", to: 'users#show_verify', as: 'verify'
-  post "users/verify"
-  post "users/resend"
-  
+Rails.application.routes.draw do  
   resources :users
   
   # The priority is based upon order of creation: first created -> highest priority.

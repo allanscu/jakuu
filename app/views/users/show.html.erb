@@ -60,17 +60,6 @@
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
 
-<h1>This is beginning of authy</h1>
-
-<p>Account Status: <% if @user.verified? %>Verified<% else -%>Not Verified<% end -%>
-<% if !@user.verified? %>
-<p>
-  <%= link_to "Verify your account now.", verify_path %>
-</p>
-<% end -%>
-
-<h1>This is end of authy</h1>
-
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi2m6eZeYQabAIV-5uZGlf16DbWvJCMOs&sensor=false">
 </script>

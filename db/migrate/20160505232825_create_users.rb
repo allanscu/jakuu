@@ -11,10 +11,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :zip_code
       t.string :country
       t.string :phone
-      t.string :authy_id
       t.float :latitude
       t.float :longitude
-      t.boolean :verified, default: false
 
       t.timestamps null: false
     end
