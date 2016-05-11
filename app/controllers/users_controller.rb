@@ -40,10 +40,6 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @users = User.all
-    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
-      marker.lat user.latitude
-      marker.lng user.longitude
-    end
   end
 
   # GET /users/new
@@ -62,7 +58,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # Deliver the signup email
+        # Deliver the signup email via SendGrid
         UserNotifier.send_signup_email(@user).deliver
         
         # Deliver Twilio SMS

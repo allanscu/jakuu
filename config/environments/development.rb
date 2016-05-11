@@ -49,4 +49,9 @@ Rails.application.configure do
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
+  
+  # Twilio
+  ENV['TWILIO_NUMBER'] = '6504899933'
+  ENV['TWILIO_ACCOUNT_SID'] = 'AC7ae612ebddee8f121c9bdd3c708df464'
+  ENV['TWILIO_AUTH_TOKEN'] = '74f6d4e192fb0090ad0dcf37d413b7f1'
 end
