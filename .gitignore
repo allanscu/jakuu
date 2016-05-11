@@ -11,3 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore environment files
+/config/environments/development.rb
+/config/environments/test.rb
