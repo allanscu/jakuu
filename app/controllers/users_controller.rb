@@ -1,5 +1,34 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
+  #Twilio exception handler
+  rescue_from StandardError do |exception|
+    trigger_sms_alerts(exception)
+  end
+  
+  def trigger_sms_alerts(e)
+    @alert_message = "
+      [This is a test] ALERT! 
+      It appears the server is having issues. 
+      Exception: #{e}. 
+      Go to: http://newrelic.com for more details."
+    @image_url = "http://howtodocs.s3.amazonaws.com/new-relic-monitor.png"
+
+    @admin_list = YAML.load_file('config/administrators.yml')
+
+    begin
+      @admin_list.each do |admin|
+        phone_number = admin['phone_number']
+        send_message(phone_number, @alert_message, @image_url)
+      end
+    
+      flash[:success] = "Exception: #{e}. Administrators will be notified."
+    rescue
+      flash[:alert] = "Something when wrong."
+    end
+
+    redirect_to '/'
+  end
 
   # GET /users
   # GET /users.json
@@ -37,17 +66,14 @@ class UsersController < ApplicationController
         UserNotifier.send_signup_email(@user).deliver
         
         # Deliver Twilio SMS
-        twilio_sid = "AC7ae612ebddee8f121c9bdd3c708df464"
-        twilio_token = "74f6d4e192fb0090ad0dcf37d413b7f1"
-        
-        twilio_phone_number = "6504899933"
-        
-        @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
+        @twilio_phone_number = ENV['TWILIO_NUMBER']
 
-        @twilio_client.account.sms.messages.create(
-          :from => "+1#{twilio_phone_number}",
+        @twilio_client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+
+        @twilio_client.account.messages.create(
+          :from => @twilio_phone_number,
           :to => @user.phone,
-          :body => "This is a message. It gets sent to #{@user.phone}"
+          :body => "Hi #{@user.first_name}!  Thanks for signing up!"
         )
         
         format.html { redirect_to @user, notice: 'User was successfully created.' }
