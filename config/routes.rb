@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  get "users/verify", to: 'users#show_verify', as: 'verify'
+  post "users/verify"
+  post "users/resend"
+  
   resources :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

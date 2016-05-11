@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Ruby file
 ruby '2.3.0'
 
+# Authy for sending token
+gem 'authy'
+
 # Twilio
 gem 'twilio-ruby'
 

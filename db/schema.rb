@@ -27,10 +27,12 @@ ActiveRecord::Schema.define(version: 20160505232825) do
     t.string   "zip_code"
     t.string   "country"
     t.string   "phone"
+    t.string   "authy_id"
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "verified",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
 end

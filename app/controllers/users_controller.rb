@@ -62,7 +62,26 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # Deliver the signup email
+        # Save the user_id to the session object
+        session[:user_id] = @user.id
+        
+        # Create user on Authy, will return an id on the object
+        authy = Authy::API.register_user(
+          email: @user.email,
+          cellphone: @user.phone,
+          country_code: "1"
+        )
+        if authy.ok?
+          self.authy_id = authy.id
+          #@user.update(authy_id: authy.id)
+        else
+          authy.errors # this will return an error hash
+        end
+        
+        # Send an SMS to your user
+        Authy::API.request_sms(id: @user.authy_id)
+        
+        # Deliver the signup email via SendGrid
         UserNotifier.send_signup_email(@user).deliver
         
         # Deliver Twilio SMS
@@ -76,13 +95,58 @@ class UsersController < ApplicationController
           :body => "Hi #{@user.first_name}!  Thanks for signing up!"
         )
         
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to verify_path, notice: 'Please enter verification code' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def verify
+    @user = current_user
+
+    # Use Authy to send the verification token
+    token = Authy::API.verify(id: @user.authy_id, token: params[:token])
+
+    if token.ok?
+      # Mark the user as verified for get /user/:id
+      @user.update(verified: true)
+
+      # Send an SMS to the user 'success'
+      send_message("You did it! Signup complete :)")
+
+      # Show the user profile
+      redirect_to user_path(@user.id)
+    else
+      flash.now[:danger] = "Incorrect code, please try again"
+      render :show_verify
+    end
+  end
+  
+  def resend
+    @user = current_user
+    Authy::API.request_sms(id: @user.authy_id)
+    flash[:notice] = "Verification code re-sent"
+    redirect_to verify_path
+  end
+  
+  def send_message(message)
+    @user = current_user
+    
+    # Deliver Twilio SMS
+    @twilio_phone_number = ENV['TWILIO_NUMBER']
+
+    @twilio_client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+
+    @twilio_client.account.messages.create(
+      :from => @twilio_phone_number,
+      :to => @user.phone,
+      :body => message
+    )
+    
+    puts message.to
   end
 
   # PATCH/PUT /users/1
