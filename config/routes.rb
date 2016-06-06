@@ -1,5 +1,6 @@
 Rails.application.routes.draw do  
   get '/users/search/:query' => 'users#search', as: 'search'
+  get '/users/reindex' => 'users#reindex', as: 'reindex'
   resources :users
   
   # The priority is based upon order of creation: first created -> highest priority.

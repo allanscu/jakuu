@@ -38,7 +38,11 @@ class UsersController < ApplicationController
   
   def search
     @results = User.raw_search(params[:query])
-  end 
+  end
+  
+  def reindex
+    @reindex = User.reindex
+  end
 
   # GET /users/1
   # GET /users/1.json
