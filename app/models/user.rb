@@ -1,4 +1,9 @@
-class User < ActiveRecord::Base
+class User < ActiveRecord::Base  
+  include AlgoliaSearch
+
+  algoliasearch do
+    attribute :first_name, :last_name, :email
+  end
   
   #Geocoder
   geocoded_by :address

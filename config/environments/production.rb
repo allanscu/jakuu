@@ -80,4 +80,8 @@ Rails.application.configure do
   # Postmark
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_API_TOKEN'] }
+  
+  # Algolia search
+  Algolia.init :application_id => ENV['ALGOLIA_APP_ID'],
+               :api_key        => ENV['ALGOLIA_API_KEY']
 end

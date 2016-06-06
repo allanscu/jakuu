@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
 # Ruby file
-ruby '2.3.0'
+ruby '2.3.1'
+
+# Algolia search
+gem 'algoliasearch-rails'
 
 # Twilio
 gem 'twilio-ruby'

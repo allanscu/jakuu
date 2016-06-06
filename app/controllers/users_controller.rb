@@ -35,6 +35,10 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
+  
+  def search
+    @results = User.raw_search(params[:query])
+  end 
 
   # GET /users/1
   # GET /users/1.json
