@@ -1,1 +1,8 @@
-<%= @results['hits'] %>
+<% if  @results["nbHits"] == 0 %>
+	We found 0 results with "<%= params[:query] %>"
+<% else %>
+	<% @results["hits"].each do |record| %>
+		<%= record["first_name"] %> <%= record["last_name"] %> <%= record["email"] %> <%= link_to 'Show', user_path(record["objectID"]) %>
+		<br />
+	<% end %>
+<% end %>
